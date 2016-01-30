@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
-
-using UnityEngine;
-using System.Collections;
 
 public class SphereMovement : MonoBehaviour
 {
+    public GameObject ground;
 
     // speed is the rate at which the object will rotate
     public float speed;
