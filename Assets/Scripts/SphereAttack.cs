@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class SphereAttack : MonoBehaviour {
     Rigidbody myRigidbody;
     public float attackForce;
@@ -10,6 +10,8 @@ public class SphereAttack : MonoBehaviour {
     public GameObject ground;
     public float maxEnergy;
     public float currentEnergy;
+
+    public Slider energyBar;
 	// Use this for initialization
 	void Start ()
     {
@@ -17,6 +19,7 @@ public class SphereAttack : MonoBehaviour {
         myRigidbody = this.GetComponent<Rigidbody>();
         currentEnergy = maxEnergy;
         StartCoroutine(EnergyCharging());
+        energyBar = GameObject.FindGameObjectWithTag("EnergyBar").GetComponent<Slider>();
 	}
 	
 	// Update is called once per frame
@@ -27,11 +30,10 @@ public class SphereAttack : MonoBehaviour {
             StartCoroutine("ChargeAttack");
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.useGravity = false;
-            Debug.Log("Started the coroutine");
+
         }
         if((Input.GetMouseButtonUp(0) || attackForce >= maxForce) && currentEnergy == maxEnergy)
         {
-            Debug.Log("Stopped the coroutine");
             StopCoroutine("ChargeAttack");
             myRigidbody.useGravity = true;
             myRigidbody.AddForce(this.transform.forward * attackForce, ForceMode.Impulse);
@@ -46,7 +48,7 @@ public class SphereAttack : MonoBehaviour {
             myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             Debug.Log("jumped");
         }
-
+        energyBar.value = currentEnergy;
 	}
 
 
@@ -72,7 +74,7 @@ public class SphereAttack : MonoBehaviour {
 
                 // Determine the target rotation.  This is the rotation if the transform looks at the target point.
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-                Debug.Log(targetPoint);
+
 
                 // Smoothly rotate towards the target point.
                 transform.rotation = targetRotation;
