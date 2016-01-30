@@ -12,6 +12,7 @@ public class SphereAttack : MonoBehaviour {
     public float currentEnergy;
     public Slider chargeBar;
     public Slider energyBar;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -99,6 +100,14 @@ public class SphereAttack : MonoBehaviour {
                 currentEnergy += 0.5f;
             }
             yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    public void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.CompareTag("Worshiper") && myRigidbody.velocity.magnitude > 20)
+        {
+            other.gameObject.GetComponent<Worshiper>().health--;
         }
     }
 }
