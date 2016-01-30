@@ -5,6 +5,8 @@ public class SphereAttack : MonoBehaviour {
     Rigidbody myRigidbody;
     public float attackForce;
     public float maxForce;
+    public bool isGrounded;
+    public float jumpForce;
 	// Use this for initialization
 	void Start ()
     {
@@ -19,15 +21,25 @@ public class SphereAttack : MonoBehaviour {
         {
             StartCoroutine("ChargeAttack");
             myRigidbody.velocity = Vector3.zero;
+            myRigidbody.useGravity = false;
             Debug.Log("Started the coroutine");
         }
         if(Input.GetMouseButtonUp(0) || attackForce >= maxForce)
         {
             Debug.Log("Stopped the coroutine");
             StopCoroutine("ChargeAttack");
+            myRigidbody.useGravity = true;
             myRigidbody.AddForce(this.transform.forward * attackForce, ForceMode.Impulse);
             attackForce = 0;
+            
         }
+
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            Debug.Log("jumped");
+        }
+
 	}
 
 
