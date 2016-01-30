@@ -18,9 +18,10 @@ public class SphereAttack : MonoBehaviour {
 	    if(Input.GetMouseButtonDown(0))
         {
             StartCoroutine("ChargeAttack");
+            myRigidbody.velocity = Vector3.zero;
             Debug.Log("Started the coroutine");
         }
-        if(Input.GetMouseButtonUp(0))
+        if(Input.GetMouseButtonUp(0) || attackForce >= maxForce)
         {
             Debug.Log("Stopped the coroutine");
             StopCoroutine("ChargeAttack");
