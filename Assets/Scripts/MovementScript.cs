@@ -16,21 +16,24 @@ public class MovementScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-	    if(Input.GetAxis("Vertical") > 0.1)
+        if (Input.GetAxis("Vertical") > 0.1)
         {
             this.myRigidbody.MovePosition(this.transform.position + this.transform.forward * Time.deltaTime * speed);
         }
-        else if(Input.GetAxis("Vertical") < -0.1)
+        else if (Input.GetAxis("Vertical") < -0.1)
         {
             this.myRigidbody.MovePosition(this.transform.position + this.transform.forward * Time.deltaTime * -speed);
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
 
             this.myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-	}
+
+
+
+    }
 
     public void OnCollisionEnter(Collision other)
     {
