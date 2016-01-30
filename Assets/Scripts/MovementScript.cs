@@ -8,9 +8,11 @@ public class MovementScript : MonoBehaviour {
     public float jumpForce;
     public bool isGrounded;
     Vector3 movementDir;
+    public int jumpCounter;
 	// Use this for initialization
 	void Start ()
     {
+        jumpCounter = 0;
         isGrounded = true;
         myRigidbody = this.GetComponent<Rigidbody>();
         
@@ -21,12 +23,23 @@ public class MovementScript : MonoBehaviour {
     {
         movementDir.x = movementDir.y = movementDir.z = 0;
         movementDir.z = Input.GetAxis("Vertical")*speed;
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && jumpCounter ==0)
         {
             isGrounded = false;
+            jumpCounter++;
             movementDir.y = jumpForce;
 
         }
+        else if(Input.GetKeyDown(KeyCode.Space) && !isGrounded && jumpCounter == 1)
+        {
+            jumpCounter++;
+            movementDir.y = jumpForce;
+        }
+        if(jumpCounter == 2)
+        {
+            jumpCounter = 0;
+        }
+        
         this.myRigidbody.AddForce(movementDir, ForceMode.Impulse);
 
         if (Mathf.Abs(this.myRigidbody.velocity.z) > maxSpeed)
