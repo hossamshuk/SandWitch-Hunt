@@ -38,7 +38,7 @@ public class SphereAttack : MonoBehaviour {
         {
             StopCoroutine("ChargeAttack");
             myRigidbody.useGravity = true;
-            myRigidbody.AddForce(this.transform.forward * attackForce, ForceMode.Impulse);
+            myRigidbody.AddForce(this.transform.forward * (attackForce + 10), ForceMode.Impulse);
             currentEnergy = maxEnergy - attackForce;
             attackForce = 0;
 

@@ -26,6 +26,7 @@ public class Worshiper : MonoBehaviour {
         yield return new WaitForSeconds(respawnTime);
         enableWorshiper();
     }
+    
 
     public void DisableWorshiper()
     {
