@@ -249,8 +249,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120798}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.56, y: 3.43, z: 18.31}
+  m_LocalRotation: {x: 0, y: 0.17774612, z: 0, w: 0.98407644}
+  m_LocalPosition: {x: -13.56, y: 3.43, z: 22.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 472050}
@@ -3759,8 +3759,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2618b57848377454ab335b1eaf7eb853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 1
   isAlive: 0
   respawnTime: 4
+  myAnim: {fileID: 0}
 --- !u!114 &11411410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3797,8 +3800,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2618b57848377454ab335b1eaf7eb853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 1
   isAlive: 0
   respawnTime: 4
+  myAnim: {fileID: 0}
 --- !u!114 &11448080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3810,8 +3816,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2618b57848377454ab335b1eaf7eb853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 1
   isAlive: 0
   respawnTime: 4
+  myAnim: {fileID: 0}
 --- !u!114 &11464298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3823,8 +3832,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2618b57848377454ab335b1eaf7eb853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 1
   isAlive: 0
   respawnTime: 4
+  myAnim: {fileID: 0}
 --- !u!135 &13536270
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -3835,7 +3847,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6.735033
+  m_Radius: 4
   m_Center: {x: 2.1029243, y: -3.4026031, z: 0}
 --- !u!1001 &100100000
 Prefab:
