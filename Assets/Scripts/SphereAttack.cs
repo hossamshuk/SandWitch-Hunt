@@ -10,7 +10,7 @@ public class SphereAttack : MonoBehaviour {
     public GameObject ground;
     public float maxEnergy;
     public float currentEnergy;
-
+    public Slider chargeBar;
     public Slider energyBar;
 	// Use this for initialization
 	void Start ()
@@ -20,11 +20,13 @@ public class SphereAttack : MonoBehaviour {
         currentEnergy = maxEnergy;
         StartCoroutine(EnergyCharging());
         energyBar = GameObject.FindGameObjectWithTag("EnergyBar").GetComponent<Slider>();
+        chargeBar = GameObject.FindGameObjectWithTag("ChargeBar").GetComponent<Slider>();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
     {
+        chargeBar.value = attackForce;
 	    if(Input.GetMouseButtonDown(0) && currentEnergy == maxEnergy)
         {
             StartCoroutine("ChargeAttack");

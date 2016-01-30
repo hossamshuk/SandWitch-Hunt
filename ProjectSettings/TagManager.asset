@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstacle
   - EnergyBar
+  - ChargeBar
+  - Worshiper
   layers:
   - Default
   - TransparentFX
