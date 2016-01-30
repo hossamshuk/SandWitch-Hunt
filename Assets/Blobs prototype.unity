@@ -1153,6 +1153,8 @@ MonoBehaviour:
   isGrounded: 1
   jumpForce: 10
   ground: {fileID: 525674350}
+  maxEnergy: 50
+  currentEnergy: 0
 --- !u!1 &505464584
 GameObject:
   m_ObjectHideFlags: 0

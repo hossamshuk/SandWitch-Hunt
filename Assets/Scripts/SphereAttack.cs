@@ -8,35 +8,40 @@ public class SphereAttack : MonoBehaviour {
     public bool isGrounded;
     public float jumpForce;
     public GameObject ground;
+    public float maxEnergy;
+    public float currentEnergy;
 	// Use this for initialization
 	void Start ()
     {
         attackForce = 0;
         myRigidbody = this.GetComponent<Rigidbody>();
+        currentEnergy = maxEnergy;
+        StartCoroutine(EnergyCharging());
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-	    if(Input.GetMouseButtonDown(0))
+	    if(Input.GetMouseButtonDown(0) && currentEnergy == maxEnergy)
         {
-
             StartCoroutine("ChargeAttack");
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.useGravity = false;
             Debug.Log("Started the coroutine");
         }
-        if(Input.GetMouseButtonUp(0) || attackForce >= maxForce)
+        if((Input.GetMouseButtonUp(0) || attackForce >= maxForce) && currentEnergy == maxEnergy)
         {
             Debug.Log("Stopped the coroutine");
             StopCoroutine("ChargeAttack");
             myRigidbody.useGravity = true;
             myRigidbody.AddForce(this.transform.forward * attackForce, ForceMode.Impulse);
+            currentEnergy = maxEnergy - attackForce;
             attackForce = 0;
-            
+
+
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             Debug.Log("jumped");
@@ -75,9 +80,21 @@ public class SphereAttack : MonoBehaviour {
 
             if (attackForce < maxForce)
             {
-                attackForce += 3.5f;
+                attackForce += 0.5f;
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    public IEnumerator EnergyCharging()
+    {
+        while(true)
+        {
+            if(currentEnergy < maxEnergy)
+            {
+                currentEnergy += 0.5f;
+            }
+            yield return new WaitForSeconds(0.01f);
         }
     }
 }
