@@ -13,8 +13,8 @@ public class Temple : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //ritualMeter += (worshiperCounter * 0.01f);
-	}
+    
+    }
 
     public void OnTriggerStay(Collider other)
     {

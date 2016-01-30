@@ -12,7 +12,7 @@ public class SphereAttack : MonoBehaviour {
     public float currentEnergy;
     public Slider chargeBar;
     public Slider energyBar;
-
+    bool mouseDown, mouseUp;
 	// Use this for initialization
 	void Start ()
     {
@@ -24,24 +24,37 @@ public class SphereAttack : MonoBehaviour {
         chargeBar = GameObject.FindGameObjectWithTag("ChargeBar").GetComponent<Slider>();
 	}
 	
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            mouseDown = true;
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            mouseUp = true;
+        }
+    }
 	// Update is called once per frame
 	void FixedUpdate ()
     {
         chargeBar.value = attackForce;
-	    if(Input.GetMouseButtonDown(0) && currentEnergy == maxEnergy)
+	    if(mouseDown && currentEnergy == maxEnergy)
         {
             StartCoroutine("ChargeAttack");
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.useGravity = false;
+            mouseDown = false;
 
         }
-        if((Input.GetMouseButtonUp(0) || attackForce >= maxForce) && currentEnergy == maxEnergy)
+        if((mouseUp || attackForce >= maxForce) && currentEnergy == maxEnergy)
         {
             StopCoroutine("ChargeAttack");
             myRigidbody.useGravity = true;
             myRigidbody.AddForce(this.transform.forward * (attackForce + 10), ForceMode.Impulse);
             currentEnergy = maxEnergy - attackForce;
             attackForce = 0;
+            mouseUp = false;
 
 
         }
