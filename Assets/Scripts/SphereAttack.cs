@@ -13,6 +13,9 @@ public class SphereAttack : MonoBehaviour {
     public Slider chargeBar;
     public Slider energyBar;
     bool mouseDown, mouseUp;
+    public GameObject bloodSplatter;
+    public GameObject mouseTarget;
+    public Vector3 kaka;
 	// Use this for initialization
 	void Start ()
     {
@@ -22,6 +25,7 @@ public class SphereAttack : MonoBehaviour {
         StartCoroutine(EnergyCharging());
         energyBar = GameObject.FindGameObjectWithTag("EnergyBar").GetComponent<Slider>();
         chargeBar = GameObject.FindGameObjectWithTag("ChargeBar").GetComponent<Slider>();
+        mouseTarget = GameObject.FindGameObjectWithTag("MouseTarget");
 	}
 	
     void Update()
@@ -33,6 +37,11 @@ public class SphereAttack : MonoBehaviour {
         if(Input.GetMouseButtonUp(0))
         {
             mouseUp = true;
+        }
+        if(kaka!= null)
+        {
+            Debug.DrawLine(kaka, transform.position, Color.black, 2 , false);
+
         }
     }
 	// Update is called once per frame
@@ -50,8 +59,10 @@ public class SphereAttack : MonoBehaviour {
         if((mouseUp || attackForce >= maxForce) && currentEnergy == maxEnergy)
         {
             StopCoroutine("ChargeAttack");
-            myRigidbody.useGravity = true;
+
             myRigidbody.AddForce(this.transform.forward * (attackForce + 10), ForceMode.Impulse);
+            myRigidbody.useGravity = true;
+
             currentEnergy = maxEnergy - attackForce;
             attackForce = 0;
             mouseUp = false;
@@ -72,26 +83,19 @@ public class SphereAttack : MonoBehaviour {
     {
         while(true)
         {
-            Plane playerPlane = new Plane(Vector3.up, ground.transform.position + new Vector3(0, .5f, 0));
-            // Generate a ray from the cursor position
+            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            // Determine the point where the cursor ray intersects the plane.
-            // This will be the point that the object must look towards to be looking at the mouse.
-            // Raycasting to a Plane object only gives us a distance, so we'll have to take the distance,
-            //   then find the point along that ray that meets that distance.  This will be the point
-            //   to look at.
-            float hitdist = 0.0f;
-            // If the ray is parallel to the plane, Raycast will return false.
-            if (playerPlane.Raycast(ray, out hitdist))
+
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo))
             {
                 // Get the point along the ray that hits the calculated distance.
-                Vector3 targetPoint = ray.GetPoint(hitdist);
+                Vector3 targetPoint = hitInfo.point;
 
                 // Determine the target rotation.  This is the rotation if the transform looks at the target point.
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-
-
+                kaka = targetPoint;
                 // Smoothly rotate towards the target point.
                 transform.rotation = targetRotation;
             }
@@ -121,6 +125,13 @@ public class SphereAttack : MonoBehaviour {
         if(other.gameObject.CompareTag("Worshiper") && myRigidbody.velocity.magnitude > 20)
         {
             other.gameObject.GetComponent<Worshiper>().health--;
+
+            RaycastHit hit;
+            if (Physics.Raycast(other.gameObject.transform.position, Vector3.down, out hit))
+            {
+                Instantiate(bloodSplatter, hit.point, Quaternion.Euler( hit.normal));
+            }
+
         }
     }
 }
