@@ -27,7 +27,7 @@ public class MovementScript : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            Debug.Log("Space");
+
             this.myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 	}
