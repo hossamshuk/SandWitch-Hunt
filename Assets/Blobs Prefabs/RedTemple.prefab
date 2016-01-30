@@ -655,6 +655,7 @@ MonoBehaviour:
   isAlive: 0
   respawnTime: 4
   myAnim: {fileID: 0}
+  bloodSplatter: {fileID: 0}
 --- !u!114 &11431670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -671,6 +672,7 @@ MonoBehaviour:
   isAlive: 0
   respawnTime: 4
   myAnim: {fileID: 0}
+  bloodSplatter: {fileID: 0}
 --- !u!114 &11444224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -687,6 +689,7 @@ MonoBehaviour:
   isAlive: 0
   respawnTime: 4
   myAnim: {fileID: 0}
+  bloodSplatter: {fileID: 163528, guid: 3caf4dea79c46b443abacf5d3e6c7066, type: 2}
 --- !u!114 &11463284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -703,6 +706,7 @@ MonoBehaviour:
   isAlive: 0
   respawnTime: 4
   myAnim: {fileID: 0}
+  bloodSplatter: {fileID: 0}
 --- !u!114 &11497948
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -7,6 +7,7 @@ public class Worshiper : MonoBehaviour {
     public bool isAlive;
     public float respawnTime;
     public Animator myAnim;
+    public GameObject bloodSplatter;
 	// Use this for initialization
 	void Start ()
     {
@@ -27,7 +28,6 @@ public class Worshiper : MonoBehaviour {
         {
             DisableWorshiper();
             StartCoroutine(Respawn());
-            
         }
 	}
     public void Die()
