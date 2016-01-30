@@ -903,12 +903,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!43 &277123070
+--- !u!43 &247395281
 Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh26744
+  m_Name: pb_Mesh29806
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -1152,6 +1152,7 @@ MonoBehaviour:
   maxForce: 50
   isGrounded: 1
   jumpForce: 10
+  ground: {fileID: 525674350}
 --- !u!1 &505464584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,7 +1533,7 @@ GameObject:
   - 114: {fileID: 525674352}
   - 64: {fileID: 525674351}
   m_Layer: 0
-  m_Name: pb-Cube-397564
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1549,7 +1550,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Convex: 0
-  m_Mesh: {fileID: 277123070}
+  m_Mesh: {fileID: 247395281}
 --- !u!114 &525674352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1871,7 +1872,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 525674350}
-  m_Mesh: {fileID: 277123070}
+  m_Mesh: {fileID: 247395281}
 --- !u!4 &525674356
 Transform:
   m_ObjectHideFlags: 0
