@@ -9,10 +9,14 @@ public class GameManager : NetworkBehaviour {
 	public bool bMatchActive = false;
 	public static GameManager Instance = null;
 	
+	Temple[] Temples;
+	
 	void Awake () {
 		Instance = this;
 		bMatchActive = false;
 		Time.timeScale = 0;
+		Temples = FindObjectsOfType<Temple>();
+		
 	}
 	
 	[Server]
@@ -29,13 +33,39 @@ public class GameManager : NetworkBehaviour {
 		{
 			StartGame();
 		}
+		if(isServer && bMatchActive)
+		{
+			CheckGameEnd();
+		}
 	}
 	
 	[Server]
-	void EndMatch()
+	void CheckGameEnd()
+	{
+		foreach(Temple temple in Temples)
+		{
+			if(temple.ritualMeter >= 100)
+			{
+				EndMatch(temple.name + " Wins!!");
+				break;
+			}
+		}
+	}
+	
+	[Server]
+	void EndMatch(string msg)
 	{
 		bMatchActive = false;
 		Time.timeScale = 0;
+		RpcEndMatch(msg);
+	}
+	
+	[ClientRpc]
+	public void RpcEndMatch(string msg)
+	{
+		print("Got Message: " + msg);
+		if(FindObjectOfType<UIController>())
+			FindObjectOfType<UIController>().DisplayGameEndMessage(msg);
 	}
 	
 	[ClientRpc]
@@ -43,5 +73,6 @@ public class GameManager : NetworkBehaviour {
 	{
 		bMatchActive = true;
 		Time.timeScale = 1;
+		
 	}
 }

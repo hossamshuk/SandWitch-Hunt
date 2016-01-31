@@ -23,7 +23,8 @@ public class Temple : MonoBehaviour {
 			return;
         if(other.gameObject.tag.Contains("Worshiper"))
         {
-            ritualMeter += 0.01f;
+            if(ritualMeter < 100)
+				ritualMeter += 0.01f;
         }
     }
 	
