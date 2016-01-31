@@ -19,6 +19,7 @@ public class SphereAttack : NetworkBehaviour {
     TeamManager teamManager;
     public Material blueMaterial, redMaterial;
     public GameObject particleEffect;
+    bool isTrailing;
 
     [SyncVar]
     public int myTeam;
@@ -29,6 +30,7 @@ public class SphereAttack : NetworkBehaviour {
 	
 	void Start ()
     {
+        isTrailing = false;
         attackForce = 0;
         myRigidbody = this.GetComponent<Rigidbody>();
         currentEnergy = maxEnergy;
@@ -141,6 +143,14 @@ public class SphereAttack : NetworkBehaviour {
         {
             mouseUp = true;
         }
+        if(isTrailing)
+        {
+            this.GetComponent<TrailRenderer>().enabled = true;
+        }
+        else
+        {
+            this.GetComponent<TrailRenderer>().enabled = false;
+        }
         
     }
 	void FixedUpdate ()
@@ -170,6 +180,7 @@ public class SphereAttack : NetworkBehaviour {
             currentEnergy = maxEnergy - attackForce;
             attackForce = 0;
             mouseUp = false;
+            isTrailing = true;
 
 
         }
@@ -225,6 +236,7 @@ public class SphereAttack : NetworkBehaviour {
 
     public void OnCollisionEnter(Collision other)
     {
+        isTrailing = false;
         //Divide temple prefab into two and give team numbers to differentiate
         if(myTeam != 0 && other.gameObject.CompareTag("Worshiper"+myTeam) && other.impulse.magnitude > 8)
         {
