@@ -53,40 +53,69 @@ public class SphereAttack : NetworkBehaviour {
 
     public override void OnStartLocalPlayer()
     {
-         
-        if(teamManager.teamOneCounter <= teamManager.teamTwoCounter)
+
+        if (teamManager.teamOneCounter <= teamManager.teamTwoCounter)
         {
             myTeam = 1;
-            teamManager.CmdRegsiterSelf(1);
+            CmdRegsiterSelf(1);
             Debug.Log("Registered self as " + myTeam);
         }
-        else if(teamManager.teamOneCounter > teamManager.teamTwoCounter)
+        else if (teamManager.teamOneCounter > teamManager.teamTwoCounter)
         {
             myTeam = 2;
-            teamManager.RegisterSelf(2);
+            CmdRegsiterSelf(2);
             Debug.Log("Registered self as " + myTeam);
         }
-        else if(teamManager.teamOneCounter <= teamManager.teamTwoCounter && isClient)
-        {
-            myTeam = 1;
-            teamManager.CmdRegsiterSelf(1);
-            Debug.Log("Registered self as " + myTeam);
-        }
+        //else if (teamManager.teamOneCounter <= teamManager.teamTwoCounter && isClient)
+        //{
+        //    myTeam = 1;
+        //    teamManager.CmdRegsiterSelf(1);
+        //    Debug.Log("Registered self as " + myTeam);
+        //}
 
-        if(myTeam == 1)
+        if (myTeam == 1)
         {
             this.gameObject.name = "Player 1";
             GetComponent<Renderer>().material = blueMaterial;
         }
-        else if(myTeam == 2)
+        else if (myTeam == 2)
         {
             this.gameObject.name = "Player 2";
             GetComponent<Renderer>().material = redMaterial;
         }
 
-        
+
     }
-	
+    [Command]
+    public void CmdRegsiterSelf(int team)
+    {
+        
+        if (team == 1)
+        {
+            teamManager.RegisterSelf(1);
+            Debug.Log("team one counter: " );
+        }
+        else
+        {
+            teamManager.RegisterSelf(2);
+            Debug.Log("team two counter: ");
+        }
+    }
+    //[ClientRpc]
+    //public void RpcRegisterSelf(int team)
+    //{
+    //    if (team == 1)
+    //    {
+    //        teamOneCounter++;
+    //        Debug.Log("team one counter: " + teamOneCounter);
+    //    }
+    //    else
+    //    {
+    //        teamTwoCounter++;
+    //        Debug.Log("team two counter: " + teamTwoCounter);
+    //    }
+    //}
+
     void Update()
     {
         if (!isLocalPlayer)

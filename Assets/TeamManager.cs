@@ -21,8 +21,7 @@ public class TeamManager : NetworkBehaviour{
 	    
 	}
 
-    [Command]
-    public void CmdRegsiterSelf(int team)
+    public void RegisterSelf(int team)
     {
         if(team == 1)
         {
@@ -49,17 +48,5 @@ public class TeamManager : NetworkBehaviour{
             Debug.Log("team two counter: " + teamTwoCounter);
         }
     }
-    public void RegisterSelf(int team)
-    {
-        if (team == 1)
-        {
-            teamOneCounter++;
-            Debug.Log("team one counter: " + teamOneCounter);
-        }
-        else
-        {
-            teamTwoCounter++;
-            Debug.Log("team two counter: " + teamTwoCounter);
-        }
-    }
+   
 }
