@@ -9,12 +9,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 447914}
   - 33: {fileID: 3362196}
-  - 135: {fileID: 13565094}
   - 23: {fileID: 2328738}
   - 54: {fileID: 5449922}
-  - 114: {fileID: 11466572}
+  - 135: {fileID: 13565094}
+  - 64: {fileID: 6432468}
   - 114: {fileID: 11406330}
-  - 114: {fileID: 11407280}
+  - 114: {fileID: 11466572}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -28,8 +28,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183220}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.93, y: 0.982, z: 4.93}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -2.93, y: 4.83, z: 5.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,14 +44,14 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 00a43fe14eabbe042a939d9a5961eaec, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
   m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_MinimumChartSize: 4
@@ -66,7 +66,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183220}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 7fc5930f289635546adbbba8752da487, type: 3}
 --- !u!54 &5449922
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -80,8 +80,20 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!64 &6432468
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183220}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_Mesh: {fileID: 4300000, guid: 7fc5930f289635546adbbba8752da487, type: 3}
 --- !u!114 &11406330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -102,38 +114,8 @@ MonoBehaviour:
   currentEnergy: 0
   chargeBar: {fileID: 0}
   energyBar: {fileID: 0}
---- !u!114 &11407280
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 183220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 248
-    i1: 234
-    i2: 102
-    i3: 129
-    i4: 205
-    i5: 69
-    i6: 238
-    i7: 164
-    i8: 27
-    i9: 230
-    i10: 67
-    i11: 127
-    i12: 136
-    i13: 88
-    i14: 59
-    i15: 9
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  bloodSplatter: {fileID: 163528, guid: 3caf4dea79c46b443abacf5d3e6c7066, type: 2}
+  mouseTarget: {fileID: 0}
 --- !u!114 &11466572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,12 +135,12 @@ SphereCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183220}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 96fa74ce4dc74964293b9ac8a3dd49ec, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.72633153
+  m_Center: {x: 0, y: 0, z: 0.33}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -178,6 +160,10 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bloodSplatter
+      value: 
+      objectReference: {fileID: 163528, guid: 3caf4dea79c46b443abacf5d3e6c7066, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 183220}

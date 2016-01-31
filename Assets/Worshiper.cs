@@ -13,6 +13,7 @@ public class Worshiper : MonoBehaviour {
         health = maxHealth;
         isAlive = true;
         myAnim = this.GetComponent<Animator>();
+        respawnTime = 10;
 	}
 	
 	// Update is called once per frame
@@ -27,13 +28,12 @@ public class Worshiper : MonoBehaviour {
         {
             DisableWorshiper();
             StartCoroutine(Respawn());
-            
         }
 	}
     public void Die()
     {
         isAlive = false;
-        myAnim.enabled = true;
+        //myAnim.enabled = true;
     }
     public IEnumerator Respawn()
     {
@@ -44,17 +44,16 @@ public class Worshiper : MonoBehaviour {
 
     public void DisableWorshiper()
     {
-        this.GetComponent<Rigidbody>().isKinematic = true;
+        this.GetComponent<Animator>().enabled = false;
         this.GetComponent<Collider>().enabled = false;
-        this.GetComponent<MeshRenderer>().enabled = false;
+
 
     }
 
     public void enableWorshiper()
     {
-        this.GetComponent<Rigidbody>().isKinematic = false;
+        this.GetComponent<Animator>().enabled = true;
         this.GetComponent<Collider>().enabled = true;
-        this.GetComponent<MeshRenderer>().enabled = true;
         this.gameObject.transform.position = this.gameObject.GetComponentInParent<Transform>().position;
         isAlive = true;
         health = maxHealth;
