@@ -41,13 +41,21 @@ public class SphereAttack : NetworkBehaviour {
 	
 	public void ShouldAssignTeamColors()
 	{
-		print("Nice, " + gameObject.GetComponent<SphereAttack>().myTeam);
+		if (myTeam == 1)
+        {
+            this.gameObject.name = "Player 1";
+            GetComponent<Renderer>().material = blueMaterial;
+        }
+        else if (myTeam == 2)
+        {
+            this.gameObject.name = "Player 2";
+            GetComponent<Renderer>().material = redMaterial;
+        }
 	}
 	
 	[ClientRpc]
 	public void RpcAssignTeamColors()
 	{
-		print("Called");
 		if (myTeam == 1)
         {
             this.gameObject.name = "Player 1";
@@ -84,12 +92,24 @@ public class SphereAttack : NetworkBehaviour {
             CmdRegsiterSelf(2);
             Debug.Log("Registered self as " + myTeam);
         }
+		if (myTeam == 1)
+        {
+            this.gameObject.name = "Player 1";
+            GetComponent<Renderer>().material = blueMaterial;
+			print(gameObject.name);
+        }
+        else
+        {
+            this.gameObject.name = "Player 2";
+            GetComponent<Renderer>().material = redMaterial;
+        }
 		CmdCallAssignTeamColors();
     }
 	
     [Command]
     public void CmdRegsiterSelf(int team)
     {
+		myTeam = team;
         if (team == 1)
         {
             teamManager.RegisterSelf(1);
@@ -105,24 +125,8 @@ public class SphereAttack : NetworkBehaviour {
 	[Command]
 	public void CmdCallAssignTeamColors()
 	{
-		//RpcAssignTeamColors();
 		EventAssignTeamColors();
 	}
-	
-    //[ClientRpc]
-    //public void RpcRegisterSelf(int team)
-    //{
-    //    if (team == 1)
-    //    {
-    //        teamOneCounter++;
-    //        Debug.Log("team one counter: " + teamOneCounter);
-    //    }
-    //    else
-    //    {
-    //        teamTwoCounter++;
-    //        Debug.Log("team two counter: " + teamTwoCounter);
-    //    }
-    //}
 
     void Update()
     {
@@ -138,7 +142,6 @@ public class SphereAttack : NetworkBehaviour {
         }
         
     }
-	// Update is called once per frame
 	void FixedUpdate ()
     {
         if (!isLocalPlayer)
