@@ -5,12 +5,14 @@ public class Trap : MonoBehaviour {
     Animator myAnim;
     public GameObject player;
     bool isOn;
-	// Use this for initialization
-	void Start ()
+    public AudioSource myAudio;
+    // Use this for initialization
+    void Start ()
     {
         isOn = true;
         myAnim = GetComponent<Animator>();
-	}
+        myAudio = this.GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -21,6 +23,7 @@ public class Trap : MonoBehaviour {
     {
         if(other.gameObject.CompareTag("Player") && isOn)
         {
+            myAudio.Play();
             isOn = false;
             myAnim.SetTrigger("CloseTrap");
             other.GetComponent<Rigidbody>().isKinematic = true;

@@ -21,6 +21,8 @@ public class SphereAttack : NetworkBehaviour {
     public GameObject particleEffect;
     bool isTrailing;
 
+    public AudioSource chargeAudio, swishAudio, splatAudio, hitAudio;
+
     [SyncVar]
     public int myTeam;
 	
@@ -40,6 +42,7 @@ public class SphereAttack : NetworkBehaviour {
         mouseTarget = GameObject.FindGameObjectWithTag("MouseTarget");
 		
 		transform.Translate(Vector3.up * 10);
+        
 	}
 	
 	public void ShouldAssignTeamColors()
@@ -166,6 +169,7 @@ public class SphereAttack : NetworkBehaviour {
             particleEffect.gameObject.SetActive(true);
             particleEffect.gameObject.GetComponent<ParticleSystem>().Play();
             mouseDown = false;
+            chargeAudio.Play();
 
 
         }
@@ -181,6 +185,8 @@ public class SphereAttack : NetworkBehaviour {
             attackForce = 0;
             mouseUp = false;
             isTrailing = true;
+            chargeAudio.Stop();
+            swishAudio.Play();
 
 
         }
@@ -236,10 +242,12 @@ public class SphereAttack : NetworkBehaviour {
 
     public void OnCollisionEnter(Collision other)
     {
+        hitAudio.Play();
         isTrailing = false;
         //Divide temple prefab into two and give team numbers to differentiate
         if(myTeam != 0 && other.gameObject.CompareTag("Worshiper"+myTeam) && other.impulse.magnitude > 8)
         {
+            splatAudio.Play();
             if(other.gameObject.GetComponent<Worshiper>())
 				other.gameObject.GetComponent<Worshiper>().TakeDamage(1);
             RaycastHit hit;
