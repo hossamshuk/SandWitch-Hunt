@@ -4,6 +4,7 @@ using System.Collections;
 public class FacetedWater : MonoBehaviour {
      public Vector2 range = new Vector2(0.1f, 1);
      public float speed = 0.2f;
+	public float waveMultiplier;
      float[] randomTimes;
      Mesh mesh;
      
@@ -26,7 +27,7 @@ public class FacetedWater : MonoBehaviour {
          Vector3[] normals = mesh.normals;
          int i = 0;
          while (i < vertices.Length) {
-             vertices[i].y = 1 * Mathf.PingPong(Time.time*speed, randomTimes[i]);
+             vertices[i].z = waveMultiplier * Mathf.PingPong(Time.time*speed, randomTimes[i]);
              i++;
          }
          mesh.vertices = vertices;

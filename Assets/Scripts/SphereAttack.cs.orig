@@ -21,11 +21,9 @@ public class SphereAttack : NetworkBehaviour {
 
     [SyncVar]
     public int myTeam;
-	
-	public delegate void AssignTeamColors();
-	[SyncEvent]
-	public event AssignTeamColors EventAssignTeamColors;
-	
+
+
+	// Use this for initialization
 	void Start ()
     {
         attackForce = 0;
@@ -37,41 +35,25 @@ public class SphereAttack : NetworkBehaviour {
         mouseTarget = GameObject.FindGameObjectWithTag("MouseTarget");
 		
 		transform.Translate(Vector3.up * 10);
+
+        
+			
 	}
 	
-	public void ShouldAssignTeamColors()
-	{
-		print("Nice, " + gameObject.GetComponent<SphereAttack>().myTeam);
-	}
-	
-	[ClientRpc]
-	public void RpcAssignTeamColors()
-	{
-		print("Called");
-		if (myTeam == 1)
-        {
-            this.gameObject.name = "Player 1";
-            GetComponent<Renderer>().material = blueMaterial;
-        }
-        else if (myTeam == 2)
-        {
-            this.gameObject.name = "Player 2";
-            GetComponent<Renderer>().material = redMaterial;
-        }
-	}
-	
-	void Awake()
+	 void Awake()
     {
+
         teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
+
+
         ground = GameObject.Find("Ground");
         chargeBar = GameObject.Find("Chargebar").GetComponent<Slider>();
         energyBar = GameObject.Find("EnergyBar").GetComponent<Slider>();
-		
-		EventAssignTeamColors += new AssignTeamColors(ShouldAssignTeamColors);
     }
 
     public override void OnStartLocalPlayer()
     {
+
         if (teamManager.teamOneCounter <= teamManager.teamTwoCounter)
         {
             myTeam = 1;
@@ -84,12 +66,30 @@ public class SphereAttack : NetworkBehaviour {
             CmdRegsiterSelf(2);
             Debug.Log("Registered self as " + myTeam);
         }
-		CmdCallAssignTeamColors();
+        //else if (teamManager.teamOneCounter <= teamManager.teamTwoCounter && isClient)
+        //{
+        //    myTeam = 1;
+        //    teamManager.CmdRegsiterSelf(1);
+        //    Debug.Log("Registered self as " + myTeam);
+        //}
+
+        if (myTeam == 1)
+        {
+            this.gameObject.name = "Player 1";
+            GetComponent<Renderer>().material = blueMaterial;
+        }
+        else if (myTeam == 2)
+        {
+            this.gameObject.name = "Player 2";
+            GetComponent<Renderer>().material = redMaterial;
+        }
+
+
     }
-	
     [Command]
     public void CmdRegsiterSelf(int team)
     {
+        
         if (team == 1)
         {
             teamManager.RegisterSelf(1);
@@ -101,14 +101,6 @@ public class SphereAttack : NetworkBehaviour {
             Debug.Log("team two counter: ");
         }
     }
-	
-	[Command]
-	public void CmdCallAssignTeamColors()
-	{
-		//RpcAssignTeamColors();
-		EventAssignTeamColors();
-	}
-	
     //[ClientRpc]
     //public void RpcRegisterSelf(int team)
     //{
@@ -216,8 +208,12 @@ public class SphereAttack : NetworkBehaviour {
 
     public void OnCollisionEnter(Collision other)
     {
+<<<<<<< HEAD
+        if(other.gameObject.CompareTag("Worshiper") && other.impulse.magnitude > 8)
+=======
         //Divide temple prefab into two and give team numbers to differentiate
-        if(myTeam != 0 && other.gameObject.CompareTag("Worshiper"+myTeam) && other.impulse.magnitude > 8)
+        if(myTeam != 0 && other.gameObject.CompareTag("Worshiper"+myTeam) && myRigidbody.velocity.magnitude > 20)
+>>>>>>> 1dd774bf55a154076a3b685ac37362f15570ba99
         {
             if(other.gameObject.GetComponent<Worshiper>())
 				other.gameObject.GetComponent<Worshiper>().TakeDamage(1);

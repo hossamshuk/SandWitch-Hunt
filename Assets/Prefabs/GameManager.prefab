@@ -24,6 +24,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 417882}
   - 114: {fileID: 11484624}
+  - 114: {fileID: 11492712}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -67,8 +68,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1025aadc4478d3f439824f8f319cd764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 183220, guid: 4fc43562cf0cd0a4580c1b1166929a2d, type: 2}
-  PlayerSpawnPoint: {fileID: 460536}
+  bMatchActive: 0
+--- !u!114 &11492712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 26
+    i1: 209
+    i2: 109
+    i3: 55
+    i4: 118
+    i5: 107
+    i6: 91
+    i7: 212
+    i8: 233
+    i9: 119
+    i10: 22
+    i11: 140
+    i12: 92
+    i13: 138
+    i14: 247
+    i15: 60
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

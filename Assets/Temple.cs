@@ -21,7 +21,7 @@ public class Temple : MonoBehaviour {
     {
 		if(!GameManager.Instance || !GameManager.Instance.bMatchActive)
 			return;
-        if(other.gameObject.CompareTag("Worshiper"))
+        if(other.gameObject.tag.Contains("Worshiper"))
         {
             ritualMeter += 0.01f;
         }

@@ -9,16 +9,10 @@ public class GameManager : NetworkBehaviour {
 	public bool bMatchActive = false;
 	public static GameManager Instance = null;
 	
-	void Start () {
+	void Awake () {
 		Instance = this;
 		bMatchActive = false;
 		Time.timeScale = 0;
-	}
-	
-	[Command]
-	public void CmdPrintMeThis()
-	{
-		print("asdasdasdasdasd");
 	}
 	
 	[Server]
@@ -31,16 +25,9 @@ public class GameManager : NetworkBehaviour {
 
 	void Update ()
 	{
-		if(isServer && Input.GetKeyUp(KeyCode.F5) && !bMatchActive)
+		if(isServer && Input.GetKeyUp(KeyCode.F5) && !bMatchActive && TeamManager.Instance && TeamManager.Instance.teamOneCounter > 0 && TeamManager.Instance.teamTwoCounter > 0)
 		{
 			StartGame();
-		}
-		if(isServer)
-			print("Server");
-		if(isClient && !isServer)
-		{
-			print("Client");
-			CmdPrintMeThis();
 		}
 	}
 	
