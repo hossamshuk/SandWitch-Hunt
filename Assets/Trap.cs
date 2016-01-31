@@ -19,7 +19,7 @@ public class Trap : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "Player" && isOn)
+        if(other.gameObject.CompareTag("Player") && isOn)
         {
             isOn = false;
             myAnim.SetTrigger("CloseTrap");
