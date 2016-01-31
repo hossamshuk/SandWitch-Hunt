@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Worshiper : MonoBehaviour {
-    public int health;
+    public float health;
     public int maxHealth;
     public bool isAlive;
     public float respawnTime;
@@ -19,17 +19,24 @@ public class Worshiper : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(health == 0)
+        if(health <= 0)
         {
             myAnim.enabled = false;
+			DisableWorshiper();
             Invoke("Die", 4);
         }
+		
 	    if(!isAlive)
         {
-            DisableWorshiper();
             StartCoroutine(Respawn());
         }
 	}
+	
+	public void TakeDamage(float damage)
+	{
+		health -= damage;
+	}
+	
     public void Die()
     {
         isAlive = false;
@@ -38,7 +45,7 @@ public class Worshiper : MonoBehaviour {
     public IEnumerator Respawn()
     {
         yield return new WaitForSeconds(respawnTime);
-        enableWorshiper();
+        EnableWorshiper();
     }
     
 
@@ -46,19 +53,14 @@ public class Worshiper : MonoBehaviour {
     {
         this.GetComponent<Animator>().enabled = false;
         this.GetComponent<Collider>().enabled = false;
-
-
     }
 
-    public void enableWorshiper()
+    public void EnableWorshiper()
     {
         this.GetComponent<Animator>().enabled = true;
         this.GetComponent<Collider>().enabled = true;
         this.gameObject.transform.position = this.gameObject.GetComponentInParent<Transform>().position;
         isAlive = true;
         health = maxHealth;
-
     }
-    
-
 }

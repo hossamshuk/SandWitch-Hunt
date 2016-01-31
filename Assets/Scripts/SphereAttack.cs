@@ -89,7 +89,6 @@ public class SphereAttack : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            Debug.Log("jumped");
         }
         energyBar.value = currentEnergy;
 	}
@@ -137,9 +136,10 @@ public class SphereAttack : NetworkBehaviour {
 
     public void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.CompareTag("Worshiper") && myRigidbody.velocity.magnitude > 20)
+        if(other.gameObject.CompareTag("Worshiper") && other.impulse.magnitude > 8)
         {
-            other.gameObject.GetComponent<Worshiper>().health--;
+            if(other.gameObject.GetComponent<Worshiper>())
+				other.gameObject.GetComponent<Worshiper>().TakeDamage(1);
             RaycastHit hit;
             if (Physics.Raycast(other.gameObject.transform.position, Vector3.down, out hit))
             {

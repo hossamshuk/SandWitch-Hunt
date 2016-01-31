@@ -1,24 +1,60 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class GameManager : MonoBehaviour {
+
+public class GameManager : NetworkBehaviour {
 	
-	public GameObject PlayerPrefab;
-	public Transform PlayerSpawnPoint;
+	[HideInInspector]
+	public bool bMatchActive = false;
+	public static GameManager Instance = null;
 	
-	// Use this for initialization
 	void Start () {
-		StartGame();
+		Instance = this;
+		bMatchActive = false;
+		Time.timeScale = 0;
 	}
 	
+	[Command]
+	public void CmdPrintMeThis()
+	{
+		print("asdasdasdasdasd");
+	}
+	
+	[Server]
 	void StartGame()
 	{
-		if(PlayerPrefab && PlayerSpawnPoint)
-			Instantiate(PlayerPrefab, PlayerSpawnPoint.position, PlayerSpawnPoint.rotation);
+		bMatchActive = true;
+		Time.timeScale = 1;
+		RpcStartGame();
+	}
+
+	void Update ()
+	{
+		if(isServer && Input.GetKeyUp(KeyCode.F5) && !bMatchActive)
+		{
+			StartGame();
+		}
+		if(isServer)
+			print("Server");
+		if(isClient && !isServer)
+		{
+			print("Client");
+			CmdPrintMeThis();
+		}
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	[Server]
+	void EndMatch()
+	{
+		bMatchActive = false;
+		Time.timeScale = 0;
+	}
 	
+	[ClientRpc]
+	public void RpcStartGame()
+	{
+		bMatchActive = true;
+		Time.timeScale = 1;
 	}
 }
