@@ -1,15 +1,27 @@
 fileFormatVersion: 2
-guid: 7fc5930f289635546adbbba8752da487
-timeCreated: 1454195850
+guid: 1852821b746b5ee48b6b7b59840c91e9
+timeCreated: 1454197732
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Object001
+    100000: Bone001
+    100002: Bone002
+    100004: button
+    100006: Trap
+    100008: //RootNode
+    400000: Bone001
+    400002: Bone002
+    400004: button
+    400006: Trap
+    400008: //RootNode
+    2300000: button
+    3300000: button
+    4300000: Trap
+    4300002: button
+    7400000: TrapClose
+    9500000: //RootNode
+    13700000: Trap
   materials:
     importMaterials: 1
     materialName: 0
@@ -30,11 +42,49 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: TrapClose
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 10
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Bone001
+        weight: 1
+      - path: Bone002
+        weight: 1
+      - path: button
+        weight: 1
+      - path: Trap
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 75
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -68,7 +118,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

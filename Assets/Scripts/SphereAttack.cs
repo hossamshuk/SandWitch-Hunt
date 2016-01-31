@@ -15,7 +15,6 @@ public class SphereAttack : MonoBehaviour {
     bool mouseDown, mouseUp;
     public GameObject bloodSplatter;
     public GameObject mouseTarget;
-    public Vector3 kaka;
 	// Use this for initialization
 	void Start ()
     {
@@ -38,11 +37,7 @@ public class SphereAttack : MonoBehaviour {
         {
             mouseUp = true;
         }
-        if(kaka!= null)
-        {
-            Debug.DrawLine(kaka, transform.position, Color.black, 2 , false);
-
-        }
+        
     }
 	// Update is called once per frame
 	void FixedUpdate ()
@@ -88,14 +83,13 @@ public class SphereAttack : MonoBehaviour {
 
 
             RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo))
+            if (Physics.Raycast(ray, out hitInfo, 1<<LayerMask.NameToLayer("Ground")))
             {
                 // Get the point along the ray that hits the calculated distance.
                 Vector3 targetPoint = hitInfo.point;
 
                 // Determine the target rotation.  This is the rotation if the transform looks at the target point.
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-                kaka = targetPoint;
                 // Smoothly rotate towards the target point.
                 transform.rotation = targetRotation;
             }
