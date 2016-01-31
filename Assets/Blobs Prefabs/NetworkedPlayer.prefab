@@ -18,7 +18,7 @@ GameObject:
   - 114: {fileID: 11429874}
   m_Layer: 0
   m_Name: NetworkedPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,6 +117,9 @@ MonoBehaviour:
   energyBar: {fileID: 0}
   bloodSplatter: {fileID: 163528, guid: 3caf4dea79c46b443abacf5d3e6c7066, type: 2}
   mouseTarget: {fileID: 0}
+  blueMaterial: {fileID: 2100000, guid: 00a43fe14eabbe042a939d9a5961eaec, type: 2}
+  redMaterial: {fileID: 2100000, guid: 37570c2878f2c054ab4a3471e6f314fe, type: 2}
+  myTeam: 0
 --- !u!114 &11432568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,6 +227,18 @@ Prefab:
       propertyPath: isGrounded
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: blueMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 00a43fe14eabbe042a939d9a5961eaec, type: 2}
+    - target: {fileID: 0}
+      propertyPath: redMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 37570c2878f2c054ab4a3471e6f314fe, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 183220}

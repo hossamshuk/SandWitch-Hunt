@@ -7,8 +7,11 @@ TagManager:
   - Obstacle
   - EnergyBar
   - ChargeBar
-  - Worshiper
+  - Worshiper1
   - MouseTarget
+  - TeamManager
+  - Worshiper2
+  - Worshiper
   layers:
   - Default
   - TransparentFX
