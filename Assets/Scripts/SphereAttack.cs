@@ -70,7 +70,6 @@ public class SphereAttack : NetworkBehaviour {
 	
 	void Awake()
     {
-        teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
         ground = GameObject.Find("Ground");
         chargeBar = GameObject.Find("Chargebar").GetComponent<Slider>();
         energyBar = GameObject.Find("EnergyBar").GetComponent<Slider>();
@@ -80,6 +79,7 @@ public class SphereAttack : NetworkBehaviour {
 
     public override void OnStartLocalPlayer()
     {
+        teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
         if (teamManager.teamOneCounter <= teamManager.teamTwoCounter)
         {
             myTeam = 1;
