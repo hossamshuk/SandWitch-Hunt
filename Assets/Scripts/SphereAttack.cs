@@ -18,6 +18,7 @@ public class SphereAttack : NetworkBehaviour {
     public GameObject mouseTarget;
     TeamManager teamManager;
     public Material blueMaterial, redMaterial;
+    public GameObject particleEffect;
 
     [SyncVar]
     public int myTeam;
@@ -152,16 +153,20 @@ public class SphereAttack : NetworkBehaviour {
             StartCoroutine("ChargeAttack");
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.useGravity = false;
+            particleEffect.gameObject.SetActive(true);
+            particleEffect.gameObject.GetComponent<ParticleSystem>().Play();
             mouseDown = false;
+
 
         }
         if((mouseUp || attackForce >= maxForce) && currentEnergy == maxEnergy)
         {
             StopCoroutine("ChargeAttack");
+            particleEffect.gameObject.SetActive(false);
 
             myRigidbody.AddForce(this.transform.forward * (attackForce + 10), ForceMode.Impulse);
             myRigidbody.useGravity = true;
-
+            particleEffect.gameObject.SetActive(false);
             currentEnergy = maxEnergy - attackForce;
             attackForce = 0;
             mouseUp = false;
@@ -212,6 +217,7 @@ public class SphereAttack : NetworkBehaviour {
             if(currentEnergy < maxEnergy)
             {
                 currentEnergy += 0.5f;
+                
             }
             yield return new WaitForSeconds(0.01f);
         }
