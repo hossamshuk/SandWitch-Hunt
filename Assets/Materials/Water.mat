@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Water
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 1486fdc75b1c646488aa3cbe50a0856e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -107,6 +107,10 @@ Material:
         second: 0.5
       data:
         first:
+          name: _Shininess
+        second: 1
+      data:
+        first:
           name: _ZWrite
         second: 1
       data:
@@ -145,6 +149,34 @@ Material:
         first:
           name: _Outline
         second: 0.005
+      data:
+        first:
+          name: _AlphaFactor
+        second: 0.5
+      data:
+        first:
+          name: _WaveLength
+        second: 0.5
+      data:
+        first:
+          name: _WaveHeight
+        second: 0.5
+      data:
+        first:
+          name: _WaveSpeed
+        second: 1
+      data:
+        first:
+          name: _RandomHeight
+        second: 0.5
+      data:
+        first:
+          name: _RandomSpeed
+        second: 0.5
+      data:
+        first:
+          name: _CollisionWaveLength
+        second: 2
     m_Colors:
       data:
         first:
@@ -154,6 +186,14 @@ Material:
         first:
           name: _Color
         second: {r: 0.2926038, g: 0.5497703, b: 0.9705882, a: 1}
+      data:
+        first:
+          name: _SpecColor
+<<<<<<< HEAD
+        second: {r: 0.19215688, g: 0.19215688, b: 0.19215688, a: 1}
+=======
+        second: {r: 0.29411766, g: 0.54901963, b: 0.9725491, a: 1}
+>>>>>>> cabbd0127488faf4a4a70edd08701a26fff7093f
       data:
         first:
           name: _OutlineColor
