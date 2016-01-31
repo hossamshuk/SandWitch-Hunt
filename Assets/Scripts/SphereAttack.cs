@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.UI;
-public class SphereAttack : MonoBehaviour {
+public class SphereAttack : NetworkBehaviour {
     Rigidbody myRigidbody;
     public float attackForce;
     public float maxForce;
@@ -25,10 +26,28 @@ public class SphereAttack : MonoBehaviour {
         energyBar = GameObject.FindGameObjectWithTag("EnergyBar").GetComponent<Slider>();
         chargeBar = GameObject.FindGameObjectWithTag("ChargeBar").GetComponent<Slider>();
         mouseTarget = GameObject.FindGameObjectWithTag("MouseTarget");
+		
+		transform.Translate(Vector3.up * 10);
+			
 	}
+	
+	 void Awake()
+    {
+		
+        ground = GameObject.Find("Ground");
+        chargeBar = GameObject.Find("Chargebar").GetComponent<Slider>();
+        energyBar = GameObject.Find("EnergyBar").GetComponent<Slider>();
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        GetComponent<Renderer>().material.color = Color.green;
+    }
 	
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
         if(Input.GetMouseButtonDown(0))
         {
             mouseDown = true;
@@ -42,6 +61,8 @@ public class SphereAttack : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate ()
     {
+        if (!isLocalPlayer)
+            return;
         chargeBar.value = attackForce;
 	    if(mouseDown && currentEnergy == maxEnergy)
         {
@@ -119,7 +140,6 @@ public class SphereAttack : MonoBehaviour {
         if(other.gameObject.CompareTag("Worshiper") && myRigidbody.velocity.magnitude > 20)
         {
             other.gameObject.GetComponent<Worshiper>().health--;
-
             RaycastHit hit;
             if (Physics.Raycast(other.gameObject.transform.position, Vector3.down, out hit))
             {

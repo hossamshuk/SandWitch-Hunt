@@ -23,7 +23,7 @@ public class MovementScript : MonoBehaviour {
     {
         movementDir.x = movementDir.y = movementDir.z = 0;
         movementDir.z = Input.GetAxis("Vertical")*speed;
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && jumpCounter ==0)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && jumpCounter == 0)
         {
             isGrounded = false;
             jumpCounter++;

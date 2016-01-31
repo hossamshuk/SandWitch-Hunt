@@ -1062,7 +1062,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &172594
 GameObject:
@@ -2548,8 +2548,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.52, y: 3.6, z: 1}
+  m_Center: {x: 0, y: 0.79, z: 0}
 --- !u!65 &6549844
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2560,8 +2560,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.52, y: 3.6, z: 1}
+  m_Center: {x: 0, y: 0.79, z: 0}
 --- !u!65 &6569056
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2572,8 +2572,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.52, y: 3.6, z: 1}
+  m_Center: {x: 0, y: 0.79, z: 0}
 --- !u!65 &6577110
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2584,8 +2584,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.1171327, z: 1}
-  m_Center: {x: 0.00014040976, y: 0.55856586, z: 0.00001592515}
+  m_Size: {x: 2.52, y: 3.6, z: 1}
+  m_Center: {x: 0, y: 0.79, z: 0}
 --- !u!95 &9502294
 Animator:
   serializedVersion: 3
