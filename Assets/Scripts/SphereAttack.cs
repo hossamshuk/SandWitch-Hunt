@@ -2,7 +2,8 @@
 using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.UI;
-public class SphereAttack : NetworkBehaviour {
+public class SphereAttack : NetworkBehaviour
+{
     Rigidbody myRigidbody;
     public float attackForce;
     public float maxForce;
@@ -25,12 +26,12 @@ public class SphereAttack : NetworkBehaviour {
 
     [SyncVar]
     public int myTeam;
-	
-	public delegate void AssignTeamColors();
-	[SyncEvent]
-	public event AssignTeamColors EventAssignTeamColors;
-	
-	void Start ()
+
+    public delegate void AssignTeamColors();
+    [SyncEvent]
+    public event AssignTeamColors EventAssignTeamColors;
+
+    void Start()
     {
         isTrailing = false;
         attackForce = 0;
@@ -40,14 +41,17 @@ public class SphereAttack : NetworkBehaviour {
         energyBar = GameObject.FindGameObjectWithTag("EnergyBar").GetComponent<Slider>();
         chargeBar = GameObject.FindGameObjectWithTag("ChargeBar").GetComponent<Slider>();
         mouseTarget = GameObject.FindGameObjectWithTag("MouseTarget");
-		
-		transform.Translate(Vector3.up * 10);
-        
-	}
-	
-	public void ShouldAssignTeamColors()
-	{
-		if (myTeam == 1)
+
+        if (particleEffect == null)
+            particleEffect = transform.GetChild(0).gameObject;
+
+        transform.Translate(Vector3.up * 10);
+
+    }
+
+    public void ShouldAssignTeamColors()
+    {
+        if (myTeam == 1)
         {
             this.gameObject.name = "Player 1";
             GetComponent<Renderer>().material = blueMaterial;
@@ -57,12 +61,12 @@ public class SphereAttack : NetworkBehaviour {
             this.gameObject.name = "Player 2";
             GetComponent<Renderer>().material = redMaterial;
         }
-	}
-	
-	[ClientRpc]
-	public void RpcAssignTeamColors()
-	{
-		if (myTeam == 1)
+    }
+
+    [ClientRpc]
+    public void RpcAssignTeamColors()
+    {
+        if (myTeam == 1)
         {
             this.gameObject.name = "Player 1";
             GetComponent<Renderer>().material = blueMaterial;
@@ -72,16 +76,16 @@ public class SphereAttack : NetworkBehaviour {
             this.gameObject.name = "Player 2";
             GetComponent<Renderer>().material = redMaterial;
         }
-	}
-	
-	void Awake()
+    }
+
+    void Awake()
     {
         teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
         ground = GameObject.Find("Ground");
         chargeBar = GameObject.Find("Chargebar").GetComponent<Slider>();
         energyBar = GameObject.Find("EnergyBar").GetComponent<Slider>();
-		
-		EventAssignTeamColors += new AssignTeamColors(ShouldAssignTeamColors);
+
+        EventAssignTeamColors += new AssignTeamColors(ShouldAssignTeamColors);
     }
 
     public override void OnStartLocalPlayer()
@@ -98,28 +102,28 @@ public class SphereAttack : NetworkBehaviour {
             CmdRegsiterSelf(2);
             Debug.Log("Registered self as " + myTeam);
         }
-		if (myTeam == 1)
+        if (myTeam == 1)
         {
             this.gameObject.name = "Player 1";
             GetComponent<Renderer>().material = blueMaterial;
-			print(gameObject.name);
+            print(gameObject.name);
         }
         else
         {
             this.gameObject.name = "Player 2";
             GetComponent<Renderer>().material = redMaterial;
         }
-		CmdCallAssignTeamColors();
+        CmdCallAssignTeamColors();
     }
-	
+
     [Command]
     public void CmdRegsiterSelf(int team)
     {
-		myTeam = team;
+        myTeam = team;
         if (team == 1)
         {
             teamManager.RegisterSelf(1);
-            Debug.Log("team one counter: " );
+            Debug.Log("team one counter: ");
         }
         else
         {
@@ -127,26 +131,26 @@ public class SphereAttack : NetworkBehaviour {
             Debug.Log("team two counter: ");
         }
     }
-	
-	[Command]
-	public void CmdCallAssignTeamColors()
-	{
-		EventAssignTeamColors();
-	}
+
+    [Command]
+    public void CmdCallAssignTeamColors()
+    {
+        EventAssignTeamColors();
+    }
 
     void Update()
     {
         if (!isLocalPlayer)
             return;
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             mouseDown = true;
         }
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
             mouseUp = true;
         }
-        if(isTrailing)
+        if (isTrailing)
         {
             this.GetComponent<TrailRenderer>().enabled = true;
         }
@@ -154,14 +158,14 @@ public class SphereAttack : NetworkBehaviour {
         {
             this.GetComponent<TrailRenderer>().enabled = false;
         }
-        
+
     }
-	void FixedUpdate ()
+    void FixedUpdate()
     {
         if (!isLocalPlayer)
             return;
         chargeBar.value = attackForce;
-	    if(mouseDown && currentEnergy == maxEnergy)
+        if (mouseDown && currentEnergy == maxEnergy)
         {
             StartCoroutine("ChargeAttack");
             myRigidbody.velocity = Vector3.zero;
@@ -173,7 +177,7 @@ public class SphereAttack : NetworkBehaviour {
 
 
         }
-        if((mouseUp || attackForce >= maxForce) && currentEnergy == maxEnergy)
+        if ((mouseUp || attackForce >= maxForce) && currentEnergy == maxEnergy)
         {
             StopCoroutine("ChargeAttack");
             particleEffect.gameObject.SetActive(false);
@@ -196,19 +200,19 @@ public class SphereAttack : NetworkBehaviour {
             myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         energyBar.value = currentEnergy;
-	}
+    }
 
 
     public IEnumerator ChargeAttack()
     {
-        while(true)
+        while (true)
         {
-            
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
 
             RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo, 1<<LayerMask.NameToLayer("Ground")))
+            if (Physics.Raycast(ray, out hitInfo, 1 << LayerMask.NameToLayer("Ground")))
             {
                 // Get the point along the ray that hits the calculated distance.
                 Vector3 targetPoint = hitInfo.point;
@@ -229,12 +233,12 @@ public class SphereAttack : NetworkBehaviour {
 
     public IEnumerator EnergyCharging()
     {
-        while(true)
+        while (true)
         {
-            if(currentEnergy < maxEnergy)
+            if (currentEnergy < maxEnergy)
             {
                 currentEnergy += 0.5f;
-                
+
             }
             yield return new WaitForSeconds(0.01f);
         }
@@ -245,15 +249,15 @@ public class SphereAttack : NetworkBehaviour {
         hitAudio.Play();
         isTrailing = false;
         //Divide temple prefab into two and give team numbers to differentiate
-        if(myTeam != 0 && other.gameObject.CompareTag("Worshiper"+myTeam) && other.impulse.magnitude > 8)
+        if (myTeam != 0 && other.gameObject.CompareTag("Worshiper" + myTeam) && other.impulse.magnitude > 8)
         {
             splatAudio.Play();
-            if(other.gameObject.GetComponent<Worshiper>())
-				other.gameObject.GetComponent<Worshiper>().TakeDamage(1);
+            if (other.gameObject.GetComponent<Worshiper>())
+                other.gameObject.GetComponent<Worshiper>().TakeDamage(1);
             RaycastHit hit;
             if (Physics.Raycast(other.gameObject.transform.position, Vector3.down, out hit))
             {
-                Instantiate(bloodSplatter, hit.point, Quaternion.Euler( hit.normal));
+                Instantiate(bloodSplatter, hit.point, Quaternion.Euler(hit.normal));
             }
 
         }
