@@ -18,6 +18,10 @@ public class SphereAttack : NetworkBehaviour {
     public GameObject mouseTarget;
     TeamManager teamManager;
     public Material blueMaterial, redMaterial;
+    public GameObject particleEffect;
+    bool isTrailing;
+
+    public AudioSource chargeAudio, swishAudio, splatAudio, hitAudio;
 
     [SyncVar]
     public int myTeam;
@@ -28,6 +32,7 @@ public class SphereAttack : NetworkBehaviour {
 	
 	void Start ()
     {
+        isTrailing = false;
         attackForce = 0;
         myRigidbody = this.GetComponent<Rigidbody>();
         currentEnergy = maxEnergy;
@@ -37,6 +42,7 @@ public class SphereAttack : NetworkBehaviour {
         mouseTarget = GameObject.FindGameObjectWithTag("MouseTarget");
 		
 		transform.Translate(Vector3.up * 10);
+        
 	}
 	
 	public void ShouldAssignTeamColors()
@@ -70,6 +76,7 @@ public class SphereAttack : NetworkBehaviour {
 	
 	void Awake()
     {
+        teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
         ground = GameObject.Find("Ground");
         chargeBar = GameObject.Find("Chargebar").GetComponent<Slider>();
         energyBar = GameObject.Find("EnergyBar").GetComponent<Slider>();
@@ -79,7 +86,6 @@ public class SphereAttack : NetworkBehaviour {
 
     public override void OnStartLocalPlayer()
     {
-        teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
         if (teamManager.teamOneCounter <= teamManager.teamTwoCounter)
         {
             myTeam = 1;
@@ -140,6 +146,14 @@ public class SphereAttack : NetworkBehaviour {
         {
             mouseUp = true;
         }
+        if(isTrailing)
+        {
+            this.GetComponent<TrailRenderer>().enabled = true;
+        }
+        else
+        {
+            this.GetComponent<TrailRenderer>().enabled = false;
+        }
         
     }
 	void FixedUpdate ()
@@ -152,19 +166,27 @@ public class SphereAttack : NetworkBehaviour {
             StartCoroutine("ChargeAttack");
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.useGravity = false;
+            particleEffect.gameObject.SetActive(true);
+            particleEffect.gameObject.GetComponent<ParticleSystem>().Play();
             mouseDown = false;
+            chargeAudio.Play();
+
 
         }
         if((mouseUp || attackForce >= maxForce) && currentEnergy == maxEnergy)
         {
             StopCoroutine("ChargeAttack");
+            particleEffect.gameObject.SetActive(false);
 
             myRigidbody.AddForce(this.transform.forward * (attackForce + 10), ForceMode.Impulse);
             myRigidbody.useGravity = true;
-
+            particleEffect.gameObject.SetActive(false);
             currentEnergy = maxEnergy - attackForce;
             attackForce = 0;
             mouseUp = false;
+            isTrailing = true;
+            chargeAudio.Stop();
+            swishAudio.Play();
 
 
         }
@@ -212,6 +234,7 @@ public class SphereAttack : NetworkBehaviour {
             if(currentEnergy < maxEnergy)
             {
                 currentEnergy += 0.5f;
+                
             }
             yield return new WaitForSeconds(0.01f);
         }
@@ -219,9 +242,12 @@ public class SphereAttack : NetworkBehaviour {
 
     public void OnCollisionEnter(Collision other)
     {
+        hitAudio.Play();
+        isTrailing = false;
         //Divide temple prefab into two and give team numbers to differentiate
         if(myTeam != 0 && other.gameObject.CompareTag("Worshiper"+myTeam) && other.impulse.magnitude > 8)
         {
+            splatAudio.Play();
             if(other.gameObject.GetComponent<Worshiper>())
 				other.gameObject.GetComponent<Worshiper>().TakeDamage(1);
             RaycastHit hit;

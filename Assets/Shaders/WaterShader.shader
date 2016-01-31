@@ -1,4 +1,4 @@
-﻿Shader "Custom/WaterShader" 
+﻿Shader "Custom/WaterShaderZ" 
 {
 	Properties
 	{

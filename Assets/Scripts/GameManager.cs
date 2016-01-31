@@ -3,84 +3,79 @@ using System.Collections;
 using UnityEngine.Networking;
 
 
-public class GameManager : NetworkBehaviour
-{
-
-    [HideInInspector]
-    public bool bMatchActive = false;
-    public static GameManager Instance = null;
+public class GameManager : NetworkBehaviour {
+	
+	[HideInInspector]
+	public bool bMatchActive = false;
+	public static GameManager Instance = null;
 
     public static bool host;
     public static string ip;
 
-    public void Start()
-    {
-        //Debug.Log("wewee");
-        //if (Instance != this)
-        //    return;
+	Temple[] Temples;
+	
+	void Awake () {
+		Instance = this;
+		bMatchActive = false;
+		Time.timeScale = 0;
+		Temples = FindObjectsOfType<Temple>();
+	}
 
-    }
+	
+	[Server]
+	void StartGame()
+	{
+		bMatchActive = true;
+		Time.timeScale = 1;
+		RpcStartGame();
+	}
 
-    void Awake()
-    {
-        //if (Instance != null)
-        //{
-        //    Destroy(this.gameObject);
-        //}
-        //else
-        //{
-
-
-        Debug.Log("kekeekee");
-        if (Application.loadedLevel == 1)
-        {
-            if (host)
-            {
-                NetworkManager.singleton.StartServer();
-            }
-            else
-            {
-                NetworkManager.singleton.networkAddress = GameManager.ip;
-                NetworkManager.singleton.StartClient();
-            }
-        }
-
-
-            Instance = this;
-            bMatchActive = false;
-            Time.timeScale = 0;
-
-            //DontDestroyOnLoad(this.gameObject);
-        //}
-    }
-
-    [Server]
-    void StartGame()
-    {
-        bMatchActive = true;
-        Time.timeScale = 1;
-        RpcStartGame();
-    }
-
-    void Update()
-    {
-        if (isServer && Input.GetKeyUp(KeyCode.F5) && !bMatchActive && TeamManager.Instance && TeamManager.Instance.teamOneCounter > 0 && TeamManager.Instance.teamTwoCounter > 0)
-        {
-            StartGame();
-        }
-    }
-
-    [Server]
-    void EndMatch()
-    {
-        bMatchActive = false;
-        Time.timeScale = 0;
-    }
-
-    [ClientRpc]
-    public void RpcStartGame()
-    {
-        bMatchActive = true;
-        Time.timeScale = 1;
-    }
+	void Update ()
+	{
+		if(isServer && Input.GetKeyUp(KeyCode.F5) && !bMatchActive && TeamManager.Instance && TeamManager.Instance.teamOneCounter > 0 && TeamManager.Instance.teamTwoCounter > 0)
+		{
+			StartGame();
+		}
+		if(isServer && bMatchActive)
+		{
+			CheckGameEnd();
+		}
+	}
+	
+	[Server]
+	void CheckGameEnd()
+	{
+		foreach(Temple temple in Temples)
+		{
+			if(temple.ritualMeter >= 100)
+			{
+				EndMatch(temple.name + " Wins!!");
+				break;
+			}
+		}
+	}
+	
+	[Server]
+	void EndMatch(string msg)
+	{
+		bMatchActive = false;
+		Time.timeScale = 0;
+		RpcEndMatch(msg);
+	}
+	
+	[ClientRpc]
+	public void RpcEndMatch(string msg)
+	{
+		print("Got Message: " + msg);
+		if(FindObjectOfType<UIController>())
+			FindObjectOfType<UIController>().DisplayGameEndMessage(msg);
+	}
+	
+	[ClientRpc]
+	public void RpcStartGame()
+	{
+		bMatchActive = true;
+		Time.timeScale = 1;
+		
+	}
 }

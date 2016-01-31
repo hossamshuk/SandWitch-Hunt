@@ -189,7 +189,11 @@ Material:
       data:
         first:
           name: _SpecColor
+<<<<<<< HEAD
+        second: {r: 0.19215688, g: 0.19215688, b: 0.19215688, a: 1}
+=======
         second: {r: 0.29411766, g: 0.54901963, b: 0.9725491, a: 1}
+>>>>>>> cabbd0127488faf4a4a70edd08701a26fff7093f
       data:
         first:
           name: _OutlineColor
